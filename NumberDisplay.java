@@ -1,60 +1,80 @@
+/**
+ * Write a description of class NumberDisplay here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
 public class NumberDisplay
 {
-    private int value;
-    
+    // limite del display
     private int limit;
 
-    public NumberDisplay(int limitValue)
+    //valor del display
+    private int valueDisplay;
+
+    /**
+     * Constructor for objects of class NumberDisplay
+     * select limit of display
+     * fija valor display a 0
+     */
+
+    public NumberDisplay(int newLimit )
     {
-        limit = limitValue;
-        value = 0;
+        valueDisplay = 0;
+        limit = newLimit;
     }
 
+    /**
+     * fija valor actual del siplay pasado por parametro
+     */
     public void setValue(int value)
     {
-        if(value < limit)
+        if (value < limit)
         {
-            value = value;
+            valueDisplay = value;
         }
         else
         {
-            value = limit;
+            System.out.println("dato incorrecto introduce un numero entre 0-"+limit);
         }
     }
-    
+
+    /**
+     * metodo devuelve el valor actual del display en dos digitos
+     */
     public String getDisplayValue()
     {
-        if(value < 10)
+        String curentValue;
+
+        if (valueDisplay < 10)
         {
-            String number = "0" + value;
-            return number;
-        }
-        else if(value > 99)
-        {
-            String number = "" + 99;
-            return number;
+            curentValue = "0" + valueDisplay;
         }
         else
         {
-            String number = "" + value;
-            return number;
+            curentValue = "" + valueDisplay;
         }
+        return curentValue;
     }
-    
+
+    /**
+     * metodo que devuelve valor de display como entero
+     */
     public int getValue()
     {
-        return value;
+        return valueDisplay;
     }
-    
+
+    /**
+     * metodo que suma 1 al display si llega al limite lo pone a 0
+     */
     public void increment()
     {
-        if(value < limit)
+        valueDisplay = valueDisplay + 1;
+        if(valueDisplay == limit)
         {
-            value++;
-        }
-        else
-        {
-            value = 0;
-        }
+            valueDisplay = 0;
+        }        
     }
+
 }

@@ -1,53 +1,102 @@
+/**
+ * Write a description of class ClockDisplay here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
 public class ClockDisplay
 {
-    //un objeto NumberDisplay que guarda la hora
+    //horas
     private NumberDisplay hours;
-    //un objeto NumberDisplay que guarda los minutos
+    //minutos
     private NumberDisplay minutes;
-    //un String de 5 caracteres:la hora dos puntos y los minutos
+    //dia
+    private int day;
+    //mes
+    private int month;
+    //Año
+    private int year;
+    //hora actual en 5 caracteres
     private String displayString;
+    //fecha actual
+    private String displayDate;
 
     /**
-     * Constructor sin parametros que fija la hora actual a 00:00
+     * Constructor fija la hora a 00:00
      */
     public ClockDisplay()
-    {  
-        hours = new NumberDisplay(12);
-        minutes = new NumberDisplay(60);
-        updateDisplay();
-    }
-
-    /**
-     * Constructor con dos parametros que 
-     */
-    public ClockDisplay(int newHours,int newMinutes)
     {
+        day = 0;
+        month = 0;
+        year = 0;
         hours = new NumberDisplay(24);
         minutes = new NumberDisplay(60);
-        updateDisplay();
-        hours.setValue(newHours);
-        minutes.setValue(newMinutes);
+        updateDisplay();       
     }
 
     /**
-     * Fija una nueva hora a partir de las horas y minutos dados
+     * constructor que fija por parametros la hora
      */
-    public void setTime(int actualHour,int actualMinute)
+    public ClockDisplay(int newHour, int newMinute)
     {
-        hours.setValue(actualHour);
-        minutes.setValue(actualMinute);
+        day = 0;
+        month = 0;
+        year = 0;
+        hours = new NumberDisplay(24);
+        minutes = new NumberDisplay(60);
+        hours.setValue(newHour);
+        minutes.setValue(newMinute);
+        updateDisplay();
     }
 
     /**
-     * Devuelve una cadena de 5 caracteres con la hora y los minutos separados por dos puntos
+     * fija la hora a los valores introducidos
+     */
+
+    public void setTime(int newHour, int newMinute, int newDay, int newMonth, int newYear)
+    {
+        if (newDay > 30)
+        {
+            day = 30;
+        }
+        else
+        {
+            day = newDay;
+        }
+        if(newMonth > 12)
+        {
+            month = 12;
+        }
+        else
+        {
+            month = newMonth;
+        }
+        if(newYear > 99)
+        {
+            year = 99;
+        }
+        else
+        {
+            year = newYear;
+        }
+        hours.setValue(newHour);
+        minutes.setValue(newMinute);
+        updateDisplay();
+    }
+
+    /**
+     * devuelve en string hora actual en 5 caracteres
      */
     public String getTime()
     {
-        return displayString;
+        String completeDate;
+        displayDate = day + "" + month + "" + year;
+        completeDate = displayString + " " + displayDate;
+        return completeDate;
     }
 
     /**
-     * metodo que aumenta en 1 la hora actual
+     * adelanta el reloj un min
      */
     public void timeTick()
     {
@@ -60,20 +109,55 @@ public class ClockDisplay
     }
 
     /**
-     * Actualiza el atributo displayString
+     * Return the current time of this display in the format HH:MM.
      */
-    private void updateDisplay()
+    public void updateDisplay()
     {
-        if(hours.getValue() > 12 )
+        int actualHour = hours.getValue();
+        String displayedHour = "";
+        String amPm = "";   
+        boolean isMorning = true;
+
+        if (actualHour == 0) 
         {
-            int changedValue;
-            changedValue = hours.getValue() - 12;
-            String changedHour = "" + changedValue;
-            displayString = changedValue + ":" + minutes.getDisplayValue() + "am";
+            displayedHour = "12";
+            isMorning = true;
         }
-        else
+        else if (actualHour < 10)
         {
-            displayString = hours.getDisplayValue() + ":" + minutes.getDisplayValue() + "pm";
+            displayedHour = "0" + actualHour;
+            isMorning = true;            
         }
+        else if (actualHour < 12)
+        {
+            displayedHour = "" + actualHour;
+            isMorning = true;            
+        }
+        else if (actualHour == 12)
+        {
+            displayedHour = "12";
+            isMorning = false;
+        }
+        else if (actualHour < 22)
+        {
+            displayedHour = "0" + (actualHour - 12);
+            isMorning = false;
+        }
+        else 
+        {
+            displayedHour = "" + (actualHour- 12);
+            isMorning = false;
+        }
+
+        if (isMorning) 
+        {
+            amPm = "am";
+        }
+        else 
+        {
+            amPm = "pm";
+        }
+
+        displayString = displayedHour + ":" +  minutes.getDisplayValue() + amPm;
     }
 }
