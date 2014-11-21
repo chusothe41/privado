@@ -1,55 +1,60 @@
 public class NumberDisplay
 {
-    private int display;
+    private int value;
     
-    private int maxDisplay;
+    private int limit;
 
-    public NumberDisplay(int maxDisplayValue)
+    public NumberDisplay(int limitValue)
     {
-        maxDisplay = maxDisplayValue;
-        display = 0;
+        limit = limitValue;
+        value = 0;
     }
 
     public void setValue(int value)
     {
-        if(value < maxDisplay)
+        if(value < limit)
         {
-            display = value;
+            value = value;
         }
         else
         {
-            display = maxDisplay;
+            value = limit;
         }
     }
     
     public String getDisplayValue()
     {
-        if(display < 10)
+        if(value < 10)
         {
-            String number = "0"+display;
+            String number = "0" + value;
+            return number;
+        }
+        else if(value > 99)
+        {
+            String number = "" + 99;
             return number;
         }
         else
         {
-            String number = ""+display;
+            String number = "" + value;
             return number;
         }
     }
     
     public int getValue()
     {
-        return display;
+        return value;
     }
     
     public void increment()
     {
-        if(display < maxDisplay)
+        if(value < limit)
         {
-            display++;
+            value++;
         }
         else
         {
-            display = 0;
+            value = 0;
         }
     }
 }
